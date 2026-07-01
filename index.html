@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encurtador de Links</title>
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background: #fafafa; }
+    input, button { width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box; border-radius: 6px; border: 1px solid #ccc; }
+    button { background: #1E5FCC; color: white; font-weight: bold; cursor: pointer; border: none; }
+    button:hover { background: #154594; }
+    .result { margin-top: 20px; padding: 15px; background: #e9f0fb; border-radius: 6px; display: none; word-break: break-all; }
+  </style>
+</head>
+<body>
+
+  <h2>✂️ Encurtador de Links Flash</h2>
+  <p>Cole uma URL longa abaixo para gerar um link curto instantâneo.</p>
+
+  <input type="url" id="longUrl" placeholder="https://exemplo.com/sua-url-muito-longa-aqui" required>
+  <button onclick="encurtarLink()">Encurtar URL</button>
+
+  <div id="resultBox" class="result">
+    <strong>Seu link encurtado:</strong><br>
+    <a id="shortLink" href="#" target="_blank"></a>
+  </div>
+
+  <script>
+    async function encurtarLink() {
+      const longUrlInput = document.getElementById('longUrl').value;
+      const resultBox = document.getElementById('resultBox');
+      const shortLink = document.getElementById('shortLink');
+
+      if (!longUrlInput) return alert("Por favor, insira uma URL.");
+
+      try {
+        // Substitua pelo link do seu Cloudflare Worker publicado
+        const response = await fetch('https://seu-worker.seu-subdominio.workers.dev/shorten', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ longUrl: longUrlInput })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          shortLink.href = data.shortUrl;
+          shortLink.innerText = data.shortUrl;
+          resultBox.style.display = 'block';
+        } else {
+          alert(data.error || "Erro ao encurtar link.");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao conectar com o backend.");
+      }
+    }
+  </script>
+</body>
+</html>
