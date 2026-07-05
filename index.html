@@ -41,14 +41,14 @@
 <body>
 
   <div class="card">
-    <h2>✂️ Encurtador de Links</h2>
+    <h2>Encurtador de URL</h2>
     <p>Insira uma URL longa abaixo para criar um link curto e rápido.</p>
 
     <input type="url" id="longUrl" placeholder="https://exemplo.com/seu-link-longo" required>
     <button onclick="encurtarLink()">Encurtar URL</button>
 
     <div id="resultBox" class="result">
-      <strong>Seu link encurtado:</strong><br>
+      <strong>Seu URL encurtado:</strong><br>
       <a id="shortLink" href="#" target="_blank"></a>
     </div>
   </div>
@@ -82,7 +82,7 @@
           shortLink.innerText = data.shortUrl;
           resultBox.style.display = 'block';
         } else {
-          // Se o Worker retornar erro (como o erro 500 detalhado), mostra o alerta informativo
+         
           console.error("Erro do servidor:", data);
           alert(`Erro (${response.status}): ${data.error}\n\nDetalhes: ${data.details || 'Sem detalhes.'}\n\nDica: ${data.tip || ''}`);
         }
