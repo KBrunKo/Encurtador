@@ -35,7 +35,7 @@
 
       try {
         // Substitua pelo link do seu Cloudflare Worker publicado
-        const response = await fetch('https://encworker.bru-bcms.workers.dev/', {
+        const response = await fetch('https://encworker.bru-bcms.workers.dev', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ longUrl: longUrlInput })
